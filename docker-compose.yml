@@ -1,0 +1,7 @@
+webapp:
+        build: "node8/"
+        hostname: "node1"
+        volumes:
+            -  ./server:/opt/server:rw
+            -  ./cliente:/opt/cliente:rw
+            
