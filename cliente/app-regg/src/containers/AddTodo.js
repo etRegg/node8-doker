@@ -31,7 +31,13 @@ class AddTodo extends Component<Props, State> {
     const client = new FetchHttpClient('http://172.23.18.10:8080');
     client.addMiddleware(json());
 
-    client.post('/texto',{text:this.state.value});
+    client.post('/texto', {
+  json: {
+    text: this.state.value,
+  },
+}).then(response => {
+  console.log(response.jsonData);
+});
     this.props.dispatch(addTodo(this.state.value));
     this.setState({ value: '' });
   };

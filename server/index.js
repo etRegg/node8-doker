@@ -4,19 +4,17 @@ const express = require('express');
 
 var router = express.Router();
 var app = express();
-
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 var bodyParser     =        require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  //res.header('Access-Control-Allow-Credentials' ,'true');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT , HEAD, OPTIONS');
-  res.header("Access-Control-Allow-Headers", "DNT,X-CustomHeader,Keep-Alive,User-Agent,Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+
 
 
 router.use(function (req, res, next) {
@@ -36,7 +34,7 @@ router.post('/texto',function(req,res){
   var texto = req.body.text;
   console.log(  JSON.stringify(req.body));
 
-   res.status(200).json(req.body).then(response => JSON.(response.jsonData));
+   res.status(200).json(req.body);
 });
 
 
