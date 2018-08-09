@@ -12,7 +12,7 @@ RUN  apt install -y nodejs
 RUN  apt install -y build-essential 
 RUN apt install npm -y npm
 RUN nodejs -v
- 
+RUN  apt-get update && apt-get install -y net-tools iputils-ping 
 RUN touch  /var/log/syslog
 
-CMD tail -f /var/log/syslog
+CMD  nodejs server/index.js

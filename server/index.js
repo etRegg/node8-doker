@@ -2,7 +2,6 @@ const request = require('supertest');
 const express = require('express');
 
 
-
 var router = express.Router();
 var app = express();
 
@@ -10,7 +9,12 @@ var app = express();
 var bodyParser     =        require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use('/', express.static(__dirname + '/public'));
+
+app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist'));
+app.use('/popper', express.static(__dirname + '/node_modules/popper.js/dist'));
+app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist'));
+
+
 
 router.use(function (req, res, next) {
   console.log('Time:', Date.now());
@@ -37,7 +41,7 @@ router.post('/texto',function(req,res){
 
 app.use('/',router);
 
-const PORT =  80;
+const PORT =  8080;
 app.listen(PORT, function(){
     console.log("My http server listening on port " + PORT + "...");
 });

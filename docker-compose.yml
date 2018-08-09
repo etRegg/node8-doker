@@ -1,7 +1,26 @@
-webapp:
+version: '2'
+services: 
+ webapp:
         build: "node8/"
         hostname: "node1"
+        expose:
+              - "8080"
         volumes:
             -  ./server:/opt/server:rw
             -  ./cliente:/opt/cliente:rw
-            
+        command: ifconfig
+        networks:
+            webapp:
+                ipv4_address: 172.23.18.10
+        command: nodejs server/index.js
+
+networks:
+  webapp:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "false"
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.23.18.0/16
+        gateway: 172.23.18.1

@@ -1,12 +1,23 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <title>One Page fot toolbox</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
   </head>
   <body>
+<div class="container-fluid">
+<div class="row">
+<div class="col-md-8"><ul class="nav  nav-tabs  justify-content-end ">
+  <li  class="nav-item"><a class=" nav-link active" href="#">Active</a></li>
 
-    <h2>Add Comment</h2>
+</ul></div>
+
+</div>
+<div class="row">
+<div class="col-md-4"></div>
+<div class="col-md-4">
+<h2>Add Comment</h2>
     
 
     <p>
@@ -27,8 +38,22 @@
       <div class="like_button_container" data-commentid="3"></div>
     </p>
 
+
+</div>
+<div class="col-md-4">
+<div class="comment" data-last="1"></div>
+<div class="comment" data-last="2"></div>
+<div class="comment" data-last="3"></div>
+<div class="comment" data-last="4"></div>
+</div>
+</div>
+</div>
+<footer> por REGG</footer>    
     <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="/jquery/jquery.slim.min.js" ></script>
+    <script src="popper/umd/popper.min.js" "></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- Load our React component. -->
     <script src="regg.js"></script>

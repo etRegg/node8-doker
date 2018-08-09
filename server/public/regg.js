@@ -1,7 +1,16 @@
 'use strict';
 
 const e = React.createElement;
-
+class Comment extends React.Component {
+	  render() {
+	    return e(
+	    		'<div class="card" style="width: 18rem;"><div class="card-body"><h5 class="card-title">Comment</h5><p class="card-text">'+
+	    		this.props.name
+	    		+'</p> </div></div>'
+	    );
+	  }
+	
+}
 class LikeButton extends React.Component {
   constructor(props) {
     super(props);
@@ -20,7 +29,12 @@ class LikeButton extends React.Component {
     );
   }
 }
-
+document.querySelectorAll('.comment').forEach(te =>{
+ReactDOM.render(e(
+		Comment,
+		{name:'acoment'}
+		,te));
+});
 // Find all DOM containers, and render Like buttons into them.
 document.querySelectorAll('.like_button_container')
   .forEach(domContainer => {
