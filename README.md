@@ -2,7 +2,7 @@
    version nodejs 8.10
 ## Clonar
 
-git clone https://github.com/etRegg/node8-doker
+git clone https://github.com/etRegg/node8-doker.git
 
 ## react:  
 
