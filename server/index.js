@@ -10,10 +10,13 @@ var bodyParser     =        require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist'));
-app.use('/popper', express.static(__dirname + '/node_modules/popper.js/dist'));
-app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist'));
-
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  //res.header('Access-Control-Allow-Credentials' ,'true');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT , HEAD, OPTIONS');
+  res.header("Access-Control-Allow-Headers", "DNT,X-CustomHeader,Keep-Alive,User-Agent,Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 
 router.use(function (req, res, next) {
@@ -31,9 +34,9 @@ router.get('/texto', function(req, res,next) {
 
 router.post('/texto',function(req,res){
   var texto = req.body.text;
-    JSON.stringify(res.body);
+  console.log(  JSON.stringify(req.body));
 
-  res.end(JSON.stringify({text: texto}));
+   res.status(200).json(req.body).then(response => JSON.(response.jsonData));
 });
 
 
@@ -46,26 +49,29 @@ app.listen(PORT, function(){
     console.log("My http server listening on port " + PORT + "...");
 });
 
+chai = require('chai'),
 
- 
-request(app)
-  .get('/texto')
-  .expect('Content-Type', /json/)
-  .expect('Content-Length', '24')
-  .expect(200)
-  .end(function(err, res) {
-    if (err) throw err;
-    console.log('Exito');
-  });
-request(app)
-   .post('/texto')
-   .send({ text: 'One Dog!!' })
-   .set('Accept', 'application/json')
-   .expect(200)
-   .end(function(err, res){
-     if (err || !res.text) {
-      console.log('error');
-     } else {
-       console.log( res.text);
-     }
-   });
+
+ex = chai.expect;
+  request(app)
+        .get('/texto')
+        .expect('Content-Type', /json/)
+        .expect('Content-Length', '24')
+        .expect(200)
+        .end(function(err, res) {
+          if (err) throw err;
+          console.log('exito');
+        });
+
+
+
+
+
+var task= {text:'integration test'};
+
+      request(app) .post('/texto') .send(task) .end(function(err, res) {
+
+        ex(String(res.body.text)).to.equal('integration test');
+        task = res.body;
+        console.log('exito');
+      });

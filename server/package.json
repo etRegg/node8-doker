@@ -14,13 +14,10 @@
     "express": "^4.16.3",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.4"
-    
-    
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "mocha": "^5.2.0",
     "supertest": "^3.1.0"
-    
-    
   }
 }
