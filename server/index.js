@@ -14,7 +14,7 @@ var bodyParser     =        require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
+app.use('/main/', express.static(__dirname +'/../cliente/app-regg/build/'));
 
 
 router.use(function (req, res, next) {
@@ -40,7 +40,7 @@ router.post('/texto',function(req,res){
 
 
 
-app.use('/',router);
+app.use(router);
 
 const PORT =  8080;
 app.listen(PORT, function(){

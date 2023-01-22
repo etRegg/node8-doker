@@ -1,18 +1,21 @@
-version: '2'
+version: '3.0'
 services: 
  webapp:
         build: "node8/"
         hostname: "node1"
         expose:
               - "8080"
+              - "3000"
         volumes:
             -  ./server:/opt/server:rw
             -  ./cliente:/opt/cliente:rw
-        command: ifconfig
+
+
+
         networks:
             webapp:
                 ipv4_address: 172.23.18.10
-        command: nodejs server/index.js
+
 
 networks:
   webapp:
