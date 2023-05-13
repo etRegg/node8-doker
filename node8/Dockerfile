@@ -13,7 +13,7 @@ RUN bash /tmp/nodesource_setup.sh
 RUN  apt install -y nodejs  
 RUN  apt install -y build-essential 
 RUN npm install -g npm@9.2.0
-
+RUN npm install -g npm@9.6.6
 RUN apt-get update && apt-get install -y net-tools iputils-ping
 RUN touch  /var/log/syslog
 RUN echo "hola"> t.log

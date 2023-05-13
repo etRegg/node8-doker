@@ -31,8 +31,8 @@ router.get('/texto', function(req, res,next) {
 
 
 router.post('/texto',function(req,res){
-  var texto = req.body.text;
-  console.log(  JSON.stringify(req.body));
+    const texto = req.body.text;
+    console.log(  JSON.stringify(req.body));
 
    res.status(200).json(req.body);
 });
@@ -47,7 +47,7 @@ app.listen(PORT, function(){
     console.log("My http server listening on port " + PORT + "...");
 });
 
-chai = require('chai'),
+const chai = require('chai'),
 
 
 ex = chai.expect;
@@ -62,12 +62,12 @@ ex = chai.expect;
         });
 
 
+let task = {text: 'integration test'};
 
-
-
-var task= {text:'integration test'};
-
-      request(app) .post('/texto') .send(task) .end(function(err, res) {
+request(app)
+    .post('/texto')
+    .send(task)
+    .end(function(err, res) {
 
         ex(String(res.body.text)).to.equal('integration test');
         task = res.body;
