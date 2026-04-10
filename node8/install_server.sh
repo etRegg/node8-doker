@@ -1,3 +1,7 @@
-cd /opt/server/
+cd /cliente/app-regg/
 npm install
-node /opt/server/index.js
+npm run build
+cd ..
+cd /servidor
+npm install
+node /servidor/index.js

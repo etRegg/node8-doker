@@ -1,3 +1,3 @@
-cd /opt/cliente/app-regg/
+cd /cliente/app-regg/
 npm install
-npm run start
+npm run build
