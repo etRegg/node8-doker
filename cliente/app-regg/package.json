@@ -5,9 +5,10 @@
   "devDependencies": {
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "flow-bin": "^0.69.0",
-    "flow-typed": "^4.1.1",
-    "react-scripts": "5.0.1",
+    "flow-typed": "^2.6.2",
+    "react-scripts": "^0.0.0",
     "redux-mock-store": "^1.5.1"
   },
   "dependencies": {
