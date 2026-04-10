@@ -6,8 +6,8 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "flow-bin": "^0.69.0",
-    "flow-typed": "^2.4.0",
-    "react-scripts": "^1.1.4",
+    "flow-typed": "^4.1.1",
+    "react-scripts": "5.0.1",
     "redux-mock-store": "^1.5.1"
   },
   "dependencies": {
@@ -22,8 +22,19 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "flow": "flow",
-    "postinstall": "flow-typed install",
     "start": "react-scripts start",
     "test": "react-scripts test"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
