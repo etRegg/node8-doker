@@ -1,29 +1,16 @@
-// @flow
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FetchHttpClient, { json } from 'fetch-http-client';
 import { addTodo } from '../actions/todos';
 
-import type { Dispatch } from '../types';
-
-export type Props = {
-  dispatch: Dispatch
-};
-
-export type State = {
-  value: string
-};
-
-class AddTodo extends Component<Props, State> {
-  input: HTMLInputElement;
+class AddTodo extends Component {
   state = {
     value: ''
   };
-  handleChange = (event: SyntheticKeyboardEvent<HTMLInputElement>) => {
+  handleChange = (event) => {
     this.setState({ value: event.currentTarget.value });
   };
-  handleSubmit = (event: Event) => {
+  handleSubmit = (event) => {
     event.preventDefault();
     if (!this.state.value.trim()) {
       return;
@@ -43,11 +30,16 @@ class AddTodo extends Component<Props, State> {
   };
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <input value={this.state.value} onChange={this.handleChange} />
-          <button type="submit">
-            Add Todo
+      <div className="mb-4">
+        <form onSubmit={this.handleSubmit} className="d-flex gap-2">
+          <input 
+            className="form-control input-add-todo"
+            value={this.state.value} 
+            onChange={this.handleChange}
+            placeholder="Escribe una nueva tarea..."
+          />
+          <button type="submit" className="btn btn-add-todo">
+            ➕ Agregar
           </button>
         </form>
       </div>

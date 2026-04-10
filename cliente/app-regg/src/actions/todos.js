@@ -1,10 +1,6 @@
-// @flow
+let nextTodoId = 0;
 
-import type { Id, Text, TodosAction } from '../types/todos';
-
-let nextTodoId: Id = 0;
-
-export const addTodo = (text: Text): TodosAction => {
+export const addTodo = (text) => {
   return {
     type: 'ADD_TODO',
     id: nextTodoId++,
@@ -12,7 +8,7 @@ export const addTodo = (text: Text): TodosAction => {
   };
 };
 
-export const toggleTodo = (id: Id): TodosAction => {
+export const toggleTodo = (id) => {
   return {
     type: 'TOGGLE_TODO',
     id

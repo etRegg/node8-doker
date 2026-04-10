@@ -1,23 +1,14 @@
-// @flow
-
 import React from 'react';
 
-import type { Text } from '../types/todos';
-
-export type Props = {
-  onClick: () => void,
-  completed: boolean,
-  text: Text
-};
-
-const Todo = ({ onClick, completed, text }: Props) => (
+const Todo = ({ onClick, completed, text }) => (
   <li
     onClick={onClick}
-    style={{
-      textDecoration: completed ? 'line-through' : 'none'
-    }}
+    className={`todo-item ${completed ? 'completed' : ''}`}
   >
-    {text}
+    <span className="todo-text">
+      {completed ? '✓ ' : '○ '}
+      {text}
+    </span>
   </li>
 );
 

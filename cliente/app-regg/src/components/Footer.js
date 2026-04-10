@@ -1,25 +1,22 @@
-// @flow
-
 import React from 'react';
 
 import FilterLink from '../containers/FilterLink';
 
 const Footer = () => (
-  <p>
-    Show:
-    {' '}
+  <div className="filter-section mt-4">
+    <span className="filter-label">🔍 Filtrar por:</span>
     <FilterLink filter="SHOW_ALL">
-      All
+      Todas
     </FilterLink>
-    {', '}
+    {' '}
     <FilterLink filter="SHOW_ACTIVE">
-      Active
+      Pendientes
     </FilterLink>
-    {', '}
+    {' '}
     <FilterLink filter="SHOW_COMPLETED">
-      Completed
+      Completadas
     </FilterLink>
-  </p>
+  </div>
 );
 
 export default Footer;

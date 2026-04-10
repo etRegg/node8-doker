@@ -1,6 +1,6 @@
 const request = require('supertest');
 const express = require('express');
-
+const path = require('path');
 
 var router = express.Router();
 var app = express();
@@ -14,7 +14,14 @@ var bodyParser     =        require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/main/', express.static(__dirname +'/../cliente/app-regg/build/'));
+const buildPath = path.join(__dirname, '../cliente/build');
+app.use(express.static(buildPath));
+app.get('/main', (req, res) => {
+  res.sendFile(path.join(buildPath, 'index.html'));
+});
+app.get('/main/*', (req, res) => {
+  res.sendFile(path.join(buildPath, 'index.html'));
+});
 
 
 router.use(function (req, res, next) {

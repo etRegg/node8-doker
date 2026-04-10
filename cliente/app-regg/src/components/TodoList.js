@@ -1,21 +1,18 @@
-// @flow
-
 import React from 'react';
 
 import Todo from './Todo';
 
-import type { Todos, Id } from '../types/todos';
-
-export type Props = {
-  todos: Todos,
-  onTodoClick: (id: Id) => void
-};
-
-const TodoList = ({ todos, onTodoClick }: Props) => (
-  <ul>
-    {todos.map(todo => (
-      <Todo key={todo.id} {...todo} onClick={() => onTodoClick(todo.id)} />
-    ))}
+const TodoList = ({ todos, onTodoClick }) => (
+  <ul className="todo-list">
+    {todos.length === 0 ? (
+      <li className="alert alert-info">
+        ✨ No hay tareas. ¡Agrega una nueva!
+      </li>
+    ) : (
+      todos.map(todo => (
+        <Todo key={todo.id} {...todo} onClick={() => onTodoClick(todo.id)} />
+      ))
+    )}
   </ul>
 );
 

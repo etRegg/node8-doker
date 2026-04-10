@@ -1,23 +1,19 @@
-// @flow
+import React from 'react';
 
-import React, { type Node } from 'react';
-
-export type Props = {
-  active: boolean,
-  children?: Node,
-  onClick: () => void
-};
-
-const Link = ({ active, children, onClick }: Props) => {
+const Link = ({ active, children, onClick }) => {
   if (active) {
-    return <span>{children}</span>;
+    return (
+      <span className="filter-link active">
+        {children}
+      </span>
+    );
   }
 
   return (
-    <a  /*eslint-disable-line   */
-        href-no-hash 
+    <a 
       href="#"
-      onClick={(event: Event) => {
+      className="filter-link"
+      onClick={(event) => {
         event.preventDefault();
         onClick();
       }}

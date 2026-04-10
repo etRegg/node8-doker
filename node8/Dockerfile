@@ -1,31 +1,40 @@
 FROM ubuntu:24.04
 
+# Actualizar paquetes e instalar herramientas necesarias
+RUN apt-get update && apt-get install -y \
+    curl \
+    build-essential \
+    net-tools \
+    iputils-ping && \
+    rm -rf /var/lib/apt/lists/*
 
+# Descargar e instalar Node.js 16
+RUN cd ~ && curl -sL https://deb.nodesource.com/setup_16.x -o /tmp/nodesource_setup.sh && \
+    bash /tmp/nodesource_setup.sh && \
+    apt install -y nodejs && \
+    rm -rf /var/lib/apt/lists/*
 
-
-RUN apt-get update && apt-get install -y curl 
-
-
-RUN cd ~ && curl -sL https://deb.nodesource.com/setup_16.x -o /tmp/nodesource_setup.sh
-
-RUN bash /tmp/nodesource_setup.sh
-RUN  apt install -y nodejs  
-RUN  apt install -y build-essential 
-RUN npm install -g npm@9.2.0
+# Actualizar npm a versión 9.6.6
 RUN npm install -g npm@9.6.6
-#RUN npm install -g npm@11.12.1
-RUN apt-get update && apt-get install -y net-tools iputils-ping
-RUN touch  /var/log/syslog
-RUN echo "hola"> t.log
-#CMD tail -f t.log
-CMD mkdir /install/
-CMD mkdir /servidor/
-CMD mkdir /cliente/
-COPY install_1.sh /install/install_1.sh
-COPY install_server.sh  /install/install_server.sh
-CMD chmod 777 /install/install_1.sh
-CMD chmod 777 /install/install_server.sh
-##CMD bash /install/install_1.sh
-CMD bash /install/install_server.sh
 
-##CMD tail -f /dev/null
+# Crear directorios de trabajo
+RUN mkdir -p /app/servidor /app/cliente
+
+# Copiar proyectos
+COPY server /app/servidor
+COPY cliente/app-regg /app/cliente
+
+# Instalar dependencias del cliente y construir
+WORKDIR /app/cliente
+RUN npm install && npm run build
+
+# Instalar dependencias del servidor
+WORKDIR /app/servidor
+RUN npm install
+
+# Exponer puerto del servidor
+EXPOSE 8080
+
+# Iniciar el servidor Express
+# El servidor automáticamente sirve el cliente en /main/
+CMD ["node", "index.js"]

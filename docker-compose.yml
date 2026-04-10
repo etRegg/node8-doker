@@ -1,13 +1,17 @@
 version: '3.0'
 services: 
  webapp:
-        build: "node8/"
+        build:
+            context: "."
+            dockerfile: "node8/Dockerfile"
         hostname: "node1"
-        volumes:
-            -  ./server:/servidor:rw
-            -  ./cliente:/cliente:rw
-
-
+        # Volúmenes comentados: el Dockerfile copia los archivos en tiempo de build
+        # Si necesitas desarrollo hot-reload, descomenta estas líneas
+        # volumes:
+        #     -  ./server:/app/servidor:rw
+        #     -  ./cliente/app-regg:/app/cliente:rw
+        ports:
+            - "8080:8080"
 
         networks:
             webappv2:

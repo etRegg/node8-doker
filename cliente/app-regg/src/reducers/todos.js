@@ -1,18 +1,13 @@
-// @flow
-
-import type { Todos, Todo, Id, Text } from '../types/todos';
-import type { Action } from '../types';
-
-const createTodo = (id: Id, text: Text): Todo => ({
+const createTodo = (id, text) => ({
   id,
   text,
   completed: false
 });
 
-const toggleTodo = (todos: Todos, id: Id): Todos =>
+const toggleTodo = (todos, id) =>
   todos.map(t => (t.id !== id ? t : { ...t, completed: !t.completed }));
 
-const todos = (state: Todos = [], action: Action): Todos => {
+const todos = (state = [], action) => {
   switch (action.type) {
     case 'ADD_TODO':
       return [...state, createTodo(action.id, action.text)];
