@@ -1,3 +1,4 @@
 /server/node_modules/*
 /.idea
 /.settings
+/cliente/app-regg/node_modules/*
