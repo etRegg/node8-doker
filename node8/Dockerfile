@@ -24,17 +24,19 @@ RUN mkdir -p /app/servidor /app/cliente
 COPY server /app/servidor
 COPY cliente/app-regg /app/cliente
 
-# Instalar dependencias del cliente y construir
+# Instalar dependencias del cliente
 WORKDIR /app/cliente
-RUN npm install && npm run build
+RUN npm install
 
 # Instalar dependencias del servidor
 WORKDIR /app/servidor
 RUN npm install
 
-# Exponer puerto del servidor
+# Exponer puertos
+EXPOSE 3000
 EXPOSE 8080
+EXPOSE 9229
 
-# Iniciar el servidor Express
-# El servidor automáticamente sirve el cliente en /main/
-CMD ["node", "index.js"]
+# Iniciar el cliente en modo desarrollo
+# Para depuración, usar --inspect para el servidor si es necesario
+CMD ["npm", "start"]
