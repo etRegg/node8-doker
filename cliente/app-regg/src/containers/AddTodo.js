@@ -15,7 +15,9 @@ class AddTodo extends Component {
     if (!this.state.value.trim()) {
       return;
     }
-    const client = new FetchHttpClient('http://172.23.18.10:8080');
+    // Usar URL relativa al mismo servidor
+    const apiUrl = process.env.REACT_APP_API_URL || '';
+    const client = new FetchHttpClient(apiUrl);
     client.addMiddleware(json());
 
     client.post('/texto', {

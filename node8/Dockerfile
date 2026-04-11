@@ -8,35 +8,41 @@ RUN apt-get update && apt-get install -y \
     iputils-ping && \
     rm -rf /var/lib/apt/lists/*
 
-# Descargar e instalar Node.js 16
-RUN cd ~ && curl -sL https://deb.nodesource.com/setup_16.x -o /tmp/nodesource_setup.sh && \
+# Descargar e instalar Node.js 20
+RUN cd ~ && curl -sL https://deb.nodesource.com/setup_20.x -o /tmp/nodesource_setup.sh && \
     bash /tmp/nodesource_setup.sh && \
     apt install -y nodejs && \
     rm -rf /var/lib/apt/lists/*
 
-# Actualizar npm a versión 9.6.6
-RUN npm install -g npm@9.6.6
+# Actualizar npm a una versión compatible con Node 20
+RUN npm install -g npm@10
 
 # Crear directorios de trabajo
 RUN mkdir -p /app/servidor /app/cliente
+
+# Limpieza adicional (por si hay archivos residuales)
+RUN rm -rf /app/servidor /app/cliente && mkdir -p /app/servidor /app/cliente
 
 # Copiar proyectos
 COPY server /app/servidor
 COPY cliente/app-regg /app/cliente
 
+# Limpiar node_modules y package-lock del servidor para evitar conflictos
+RUN rm -rf /app/servidor/node_modules /app/servidor/package-lock.json /app/servidor/.npm
+
+# Instalar dependencias del servidor primero (más pequeñas)
+WORKDIR /app/servidor
+RUN npm cache clean --force && npm install
+
 # Instalar dependencias del cliente
 WORKDIR /app/cliente
-RUN npm install
-
-# Instalar dependencias del servidor
-WORKDIR /app/servidor
-RUN npm install
+RUN npm cache clean --force && npm install
 
 # Exponer puertos
 EXPOSE 3000
 EXPOSE 8080
 EXPOSE 9229
 
-# Iniciar el cliente en modo desarrollo
-# Para depuración, usar --inspect para el servidor si es necesario
-CMD ["npm", "start"]
+# Ejecutar tests y luego iniciar el servidor Express en /app/servidor
+WORKDIR /app/servidor
+CMD ["sh", "-c", "echo 'Ejecutando tests unitarios...' && NODE_ENV=test npm test && echo 'Tests completados exitosamente. Iniciando servidor...' && npm start"]

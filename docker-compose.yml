@@ -1,24 +1,38 @@
-version: '3.0'
-services: 
- webapp:
-        build:
-            context: "."
-            dockerfile: "node8/Dockerfile"
-        hostname: "node1"
-        # Volúmenes comentados: el Dockerfile copia los archivos en tiempo de build
-        # Si necesitas desarrollo hot-reload, descomenta estas líneas
-        volumes:
-            -  ./server:/app/servidor:rw
-            -  ./cliente/app-regg:/app/cliente:rw
-        ports:
-            - "3000:3000"
-            - "8080:8080"
-            - "9229:9229"
+services:
+  webapp:
+    build:
+      context: "."
+      dockerfile: "node8/Dockerfile"
+    hostname: "node1"
+    environment:
+      - DB_HOST=mariadb
+      - DB_NAME=tododb
+      - DB_USER=root
+      - DB_PASS=secret
+      - DB_PORT=3306
+    depends_on:
+      - mariadb
+    ports:
+      - "3000:3000"
+      - "8080:8080"
+      - "9229:9229"
+    networks:
+      webappv2:
+        ipv4_address: 192.168.70.44
 
-        networks:
-            webappv2:
-                ipv4_address: 192.168.70.44
-
+  mariadb:
+    image: mariadb:11
+    restart: always
+    environment:
+      - MARIADB_ROOT_PASSWORD=secret
+      - MARIADB_DATABASE=tododb
+      - MARIADB_USER=root
+      - MARIADB_PASSWORD=secret
+    ports:
+      - "3306:3306"
+    networks:
+      webappv2:
+        ipv4_address: 192.168.70.45
 
 networks:
   webappv2:
