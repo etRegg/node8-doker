@@ -26,21 +26,39 @@ El contenedor ejecuta el servidor Express en el puerto 8080 interno, y expone lo
 
 ### Acceder al Contenedor
 
-- **Aplicación React**: Disponible en `http://localhost:3000` (si se ejecuta el dev server) o servida por el servidor en `http://localhost:8080/main`.
+- **Aplicación React**: Disponible en `http://localhost:3000` (si se ejecuta el dev server) o servida por el servidor en `http://localhost:8080/`.
 - **Servidor Express**: Escucha en el puerto 8080 del contenedor.
 
 ### Acceder por la IP del Contenedor
 
 La IP del contenedor es `192.168.70.44` (configurada en `docker-compose.yml`).
 
-- **Aplicación principal**: `http://192.168.70.44:8080/main`
-- **API GET /texto**: `http://192.168.70.44:8080/texto`
-- **API POST /texto**: `http://192.168.70.44:8080/texto` (envía JSON con "text")
+- **Aplicación React**: `http://192.168.70.44:8080/`
+- **API GET /texto**: `http://192.168.70.44:8080/texto` (devuelve `{"otherText": "one text"}`)
+- **API POST /texto**: `http://192.168.70.44:8080/texto` (recibe y devuelve JSON con "text")
 
-Ejemplo de POST:
+### Uso de la API con curl
+
+#### GET /texto
 ```bash
-curl -X POST http://192.168.70.44:8080/texto -H "Content-Type: application/json" -d '{"text": "ejemplo"}'
+curl http://192.168.70.44:8080/texto
 ```
+Respuesta: `{"otherText": "one text"}`
+
+#### POST /texto
+```bash
+curl -X POST http://192.168.70.44:8080/texto \
+  -H "Content-Type: application/json" \
+  -d '{"text": "tu mensaje aquí"}'
+```
+Respuesta: `{"text": "tu mensaje aquí"}`
+
+### Configuración de Proyectos en el Contenedor
+
+- **Cliente React** (`/app/cliente`): Aplicación construida con `npm run build`, servida estáticamente desde `/app/servidor/../cliente/build`.
+- **Servidor Express** (`/app/servidor`): API con rutas GET/POST para texto, CORS habilitado para todas las origines, logs de tiempo en consola para cada request.
+
+El contenedor combina ambos: el servidor sirve la app React en `/main` y expone las APIs en `/texto`.
 
 ### Entrar al Contenedor
 
