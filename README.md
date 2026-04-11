@@ -1,43 +1,85 @@
 # node8-doker
-   version nodejs 8.10
+Proyecto con Node.js 16, React y Express en contenedor Docker.
+
 ## Clonar
 
+```bash
 git clone https://github.com/etRegg/node8-doker.git
+cd node8-doker
+```
 
-## react:  
+## Uso del Contenedor
 
+### Construir y Levantar el Contenedor
 
-#### $ cd clente/app-regg/
-#### $ npm i
+1. Construye la imagen:
+   ```bash
+   docker-compose build
+   ```
 
+2. Levanta el contenedor:
+   ```bash
+   docker-compose up
+   ```
 
+El contenedor ejecuta el servidor Express en el puerto 8080 interno, y expone los puertos 3000 (cliente React dev) y 8080 (servidor).
 
-## express, 
+### Acceder al Contenedor
 
-### tiene un aparente porblema de cors,    se ve que no se soluciona como en la ersion 3 
+- **Aplicación React**: Disponible en `http://localhost:3000` (si se ejecuta el dev server) o servida por el servidor en `http://localhost:8080/main`.
+- **Servidor Express**: Escucha en el puerto 8080 del contenedor.
 
-## acceder al contenedor
+### Acceder por la IP del Contenedor
 
-#### $ docker exec  -it  entega_webapp_1  /bin/bash
+La IP del contenedor es `192.168.70.44` (configurada en `docker-compose.yml`).
 
-te encuentras ubicado en /opt/
+- **Aplicación principal**: `http://192.168.70.44:8080/main`
+- **API GET /texto**: `http://192.168.70.44:8080/texto`
+- **API POST /texto**: `http://192.168.70.44:8080/texto` (envía JSON con "text")
 
-####  se puede hacer un post a http://172.23.18.10:8080/texto
- hay un get harcodeado con la misma url
+Ejemplo de POST:
+```bash
+curl -X POST http://192.168.70.44:8080/texto -H "Content-Type: application/json" -d '{"text": "ejemplo"}'
+```
 
+### Entrar al Contenedor
 
+```bash
+docker exec -it node8-doker_webapp_1 /bin/bash
+```
 
+Dentro del contenedor:
+- Servidor: `/app/servidor`
+- Cliente: `/app/cliente`
 
-# levantar el contenedor
+### Logs del Servidor
 
+Al levantar el contenedor, verás logs como:
+```
+My http server listening on port 8080...
+Time: [timestamp]
+```
 
-rodrigo@rodrigo-ZERO-G0505:~/Documentos/entega$ docker-compose up
-Starting entega_webapp_1 ... 
-Starting entega_webapp_1 ... done
-Attaching to entega_webapp_1
-webapp_1  | My http server listening on port 8080...
-webapp_1  | Time: 1533844971805
-webapp_1  | Time: 1533844971866
-webapp_1  | {"text":"integration test"}
-webapp_1  | exito
-webapp_1  | exito
+## Desarrollo Local
+
+### Cliente React
+
+```bash
+cd cliente/app-regg
+npm install
+npm start  # Dev server en http://localhost:3000
+```
+
+### Servidor Express
+
+```bash
+cd server
+npm install
+npm start  # Servidor en http://localhost:8080
+```
+
+## Notas
+
+- El cliente se construye automáticamente en el contenedor.
+- La vulnerabilidad de `serialize-javascript` ha sido corregida removiendo el paquete.
+- Para desarrollo con hot-reload, descomenta los volúmenes en `docker-compose.yml`.
