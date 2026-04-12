@@ -1,0 +1,18 @@
+{
+    "name": "Mi Entorno de Desarrollo",
+    "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04", 
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:1": {}
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode-remote.remote-containers",
+                "Codeium.codeium",
+                "Continue.continue",
+                "ms-azuretools.vscode-docker"
+            ]
+        }
+    },
+    "remoteUser": "vscode"
+}
