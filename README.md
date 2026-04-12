@@ -109,35 +109,6 @@ curl -X POST http://192.168.70.44:8080/texto \
 ```
 Respuesta: `{"text": "tu mensaje aquí"}`
 
-### Ejecutar Tests Unitarios
-
-Los tests unitarios están implementados con Jest y Supertest, usando SQLite en memoria para las pruebas.
-
-#### Tests incluidos:
-- **Funcionalidad básica**: Creación, validación y listado de TooDos
-- **Seguridad**: Tests de ataques de inyección conocidos:
-  - SQL Injection: `' OR '1'='1`, `'; DROP TABLE todos; --`, `' UNION SELECT * FROM users; --`
-  - XSS: `<script>alert('xss')</script>`, `<img src=x onerror=alert('xss')>`
-  - Command Injection: `test; rm -rf /`, `test | cat /etc/passwd`
-  - Path Traversal: `../../../etc/passwd`, `..%2F..%2F..%2Fetc%2Fpasswd`
-
-#### Los tests se ejecutan automáticamente al iniciar el contenedor:
-```bash
-docker compose up
-```
-
-#### Ejecutar tests manualmente:
-```bash
-docker compose exec webapp npm test
-```
-
-#### Ejecutar tests en modo watch:
-```bash
-docker compose exec webapp npm run test:watch
-```
-
-Los tests pasan **17 casos** incluyendo validaciones de seguridad. Al finalizar, la base de datos de test se limpia completamente.
-
 ### Configuración de Proyectos en el Contenedor
 
 - **Cliente React** (`/app/cliente`): Aplicación construida con `npm run build`, servida estáticamente desde `/app/servidor/../cliente/build`.

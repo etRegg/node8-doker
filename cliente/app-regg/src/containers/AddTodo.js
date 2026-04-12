@@ -33,7 +33,7 @@ class AddTodo extends Component {
   render() {
     return (
       <div className="mb-4">
-        <form onSubmit={this.handleSubmit} className="d-flex gap-2">
+        <form onSubmit={this.handleSubmit} className="add-todo-form">
           <input 
             className="form-control input-add-todo"
             value={this.state.value} 

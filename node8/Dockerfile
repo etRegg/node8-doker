@@ -43,6 +43,6 @@ EXPOSE 3000
 EXPOSE 8080
 EXPOSE 9229
 
-# Ejecutar tests y luego iniciar el servidor Express en /app/servidor
+# Iniciar el servidor Express en /app/servidor
 WORKDIR /app/servidor
-CMD ["sh", "-c", "echo 'Ejecutando tests unitarios...' && NODE_ENV=test npm test && echo 'Tests completados exitosamente. Iniciando servidor...' && npm start"]
+CMD ["npm", "start"]
