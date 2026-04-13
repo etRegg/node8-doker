@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../index.css';
+
 
 import Footer from './Footer';
 import AddTodo from '../containers/AddTodo';

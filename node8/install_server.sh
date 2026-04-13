@@ -5,3 +5,4 @@ cd ..
 cd /servidor
 npm install
 node /servidor/index.js
+tail -f /dev/null

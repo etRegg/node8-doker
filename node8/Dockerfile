@@ -1,5 +1,6 @@
 FROM ubuntu:24.04
-
+RUN apt-get update --fix-missing
+RUN apt-get update --fix-missing &&  apt-get install -y dos2unix
 # Actualizar paquetes e instalar herramientas necesarias
 RUN apt-get update && apt-get install -y \
     curl \
@@ -15,7 +16,7 @@ RUN cd ~ && curl -sL https://deb.nodesource.com/setup_20.x -o /tmp/nodesource_se
     rm -rf /var/lib/apt/lists/*
 
 # Actualizar npm a una versión compatible con Node 20
-RUN npm install -g npm@10
+RUN npm install -g npm
 
 # Crear directorios de trabajo
 RUN mkdir -p /app/servidor /app/cliente
@@ -26,7 +27,9 @@ RUN rm -rf /app/servidor /app/cliente && mkdir -p /app/servidor /app/cliente
 # Copiar proyectos
 COPY server /app/servidor
 COPY cliente/app-regg /app/cliente
-
+COPY node8/install_server.sh /install.sh
+RUN chmod 777 /install.sh
+RUN dos2unix /install.sh
 # Limpiar node_modules y package-lock del servidor para evitar conflictos
 RUN rm -rf /app/servidor/node_modules /app/servidor/package-lock.json /app/servidor/.npm
 
@@ -37,7 +40,7 @@ RUN npm cache clean --force && npm install
 # Instalar dependencias del cliente
 WORKDIR /app/cliente
 RUN npm cache clean --force && npm install
-
+RUN touch  /et.txt
 # Exponer puertos
 EXPOSE 3000
 EXPOSE 8080
@@ -46,3 +49,4 @@ EXPOSE 9229
 # Iniciar el servidor Express en /app/servidor
 WORKDIR /app/servidor
 CMD ["npm", "start"]
+ENTRYPOINT ["/bin/bash", "/install.sh" ]

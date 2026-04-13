@@ -1,24 +1,34 @@
-version: '3.0'
-services: 
- webapp:
-        build:
-            context: "."
-            dockerfile: "node8/Dockerfile"
-        hostname: "node1"
-        # Volúmenes comentados: el Dockerfile copia los archivos en tiempo de build
-        # Si necesitas desarrollo hot-reload, descomenta estas líneas
-        # volumes:
-        #     -  ./server:/app/servidor:rw
-        #     -  ./cliente/app-regg:/app/cliente:rw
-        ports:
-            - "3000:3000"
-            - "8080:8080"
-            - "9229:9229"
+services:
+  pbase_db:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: your_database_name
+      MYSQL_USER: your_username
+      MYSQL_PASSWORD: your_password
+    volumes:
+      - db_ma:/var/lib/mysql  # Corregido: Sin espacio después de los ":"
+    ports:
+      - "3366:3306"
+    networks:
+      webappv2:
+        ipv4_address: 192.168.70.45
 
-        networks:
-            webappv2:
-                ipv4_address: 192.168.70.44
+  webapp: # Corregido: Ahora está bien indentado bajo "services"
+    build:
+      context: "."
+      dockerfile: "node8/Dockerfile"
+    hostname: "node1"
+    ports:
+      - "3000:3000"
+      - "8080:8080"
+      - "9229:9229"
+    networks:
+      webappv2:
+        ipv4_address: 192.168.70.44
 
+volumes:
+  db_ma:
 
 networks:
   webappv2:
@@ -28,5 +38,5 @@ networks:
     ipam:
       driver: default
       config:
-      - subnet: 192.168.70.0/24
-        gateway: 192.168.70.1
+        - subnet: 192.168.70.0/24
+          gateway: 192.168.70.1
