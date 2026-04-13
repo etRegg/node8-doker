@@ -1,8 +1,9 @@
+
 const express = require('express');
 const path = require('path');
 
 
-var app = express();
+var app = new  express();
 var bodyParser     =        require("body-parser");
 app.use(bodyParser.json());
 app.use(function(req, res, next) {
@@ -10,12 +11,13 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-
+//import { PrismaClient } from '@prisma/client';
 const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 
-const prisma = new PrismaClient();
 
 // Passport setup
 passport.use(new OAuth2Strategy({

@@ -6,6 +6,7 @@ services:
       MYSQL_DATABASE: your_database_name
       MYSQL_USER: your_username
       MYSQL_PASSWORD: your_password
+    hostname: "appdb"
     volumes:
       - db_ma:/var/lib/mysql  # Corregido: Sin espacio después de los ":"
     ports:
@@ -19,6 +20,11 @@ services:
       context: "."
       dockerfile: "node8/Dockerfile"
     hostname: "node1"
+    depends_on:
+    - pbase_db
+    #volumes:
+    #  - './server:/app/servidor:rw'
+    #  - './cliente/app-regg:/app/cliente:rw'
     ports:
       - "3000:3000"
       - "8080:8080"

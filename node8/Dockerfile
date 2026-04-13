@@ -27,9 +27,9 @@ RUN rm -rf /app/servidor /app/cliente && mkdir -p /app/servidor /app/cliente
 # Copiar proyectos
 COPY server /app/servidor
 COPY cliente/app-regg /app/cliente
-COPY node8/install_server.sh /install.sh
-RUN chmod 777 /install.sh
-RUN dos2unix /install.sh
+COPY node8/install_servers.sh /installss.sh
+RUN chmod 777 /installss.sh
+RUN dos2unix /installss.sh
 # Limpiar node_modules y package-lock del servidor para evitar conflictos
 RUN rm -rf /app/servidor/node_modules /app/servidor/package-lock.json /app/servidor/.npm
 
@@ -48,5 +48,8 @@ EXPOSE 9229
 
 # Iniciar el servidor Express en /app/servidor
 WORKDIR /app/servidor
-CMD ["npm", "start"]
-ENTRYPOINT ["/bin/bash", "/install.sh" ]
+RUN npx prisma generate   # 👈 obligatorio
+
+CMD ["node", "index.js"]
+
+ENTRYPOINT ["/bin/bash", "/installss.sh" ]
