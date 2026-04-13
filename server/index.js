@@ -48,3 +48,20 @@ const PORT =  8080;
 app.listen(PORT, function(){
     console.log("My http server listening on port " + PORT + "...");
 });
+
+// SUGGESTED EDIT
+const mariadb = require('mariadb');
+const config = require('./config');
+
+const pool = mariadb.createPool(config);
+
+app.get('/test', async (req, res) => {
+    try {
+        const conn = await pool.getConnection();
+        const rows = await conn.query("SELECT 1+1 AS solution");
+        console.log(rows);
+        res.send('Database is working!');
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+  }    
