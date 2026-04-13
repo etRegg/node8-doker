@@ -1,0 +1,8 @@
+{
+    "ollama-chat.defaultModel": "llama3.2",
+    "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+    "chat.experimental.useSkillAdherencePrompt": true,
+    "chat.useNestedAgentsMdFiles": true,
+    "workbench.editor.preferHistoryBasedLanguageDetection": true,
+    "codeium.enableSearch": false
+}

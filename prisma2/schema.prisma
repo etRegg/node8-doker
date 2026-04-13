@@ -1,0 +1,36 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource datasources {
+  default {
+    url      = env("DATABASE_URL")
+    provider = "mysql"
+  }
+}
+
+model User {
+  id                Int     @id @default(autoincrement())
+  email             String  @unique
+  name              String?
+  tasks             Task[]
+}
+
+model Task {
+  id                Int     @id @default(autoincrement())
+  title             String
+  isCompleted       Boolean @default(false)
+  completedAt       DateTime? 
+  user              User    @relation(fields: [userId], references: [id])
+  userId            Int
+  comments          Comment[]
+}
+
+model Comment {
+  id                Int     @id @default(autoincrement())
+  content           String
+  createdAt         DateTime @default(now())
+  taskId            Int
+  task              Task     @relation(fields: [taskId], references: [id])
+}
