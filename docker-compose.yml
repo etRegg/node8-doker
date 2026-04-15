@@ -1,5 +1,21 @@
 version: '3.0'
-services: 
+services:
+ pbase_db:
+    image: mariadb:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: your_database_name
+      MYSQL_USER: your_username
+      MYSQL_PASSWORD: your_password
+    hostname: "appdb"
+    volumes:
+      - db_ma:/var/lib/mysql  # Corregido: Sin espacio después de los ":"
+    ports:
+      - "3366:3306"
+    networks:
+      webappv2:
+        ipv4_address: 192.168.70.45
+ 
  webapp:
         build:
             context: "."
@@ -19,7 +35,8 @@ services:
             webappv2:
                 ipv4_address: 192.168.70.44
 
-
+volumes:
+  db_ma:
 networks:
   webappv2:
     driver: bridge
